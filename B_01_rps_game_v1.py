@@ -1,3 +1,5 @@
+import random
+
 # Check that users have entered a valid
 # option based on a list
 def string_checker(question, valid_ans=("yes", "no")):
@@ -29,21 +31,21 @@ def instructions():
     """prints instructions"""
 
     print("""
-*** Instructions ***
+    *** Instructions ***
 
-To begin, choose the number of rounds (or press <enter> to play infinite mode).
+    To begin, choose the number of rounds (or press <enter> to play infinite mode).
 
-Then, play against the computer. You need to choose to play R (rock), P (paper), or S (scissors).
+    Then, play against the computer. You need to choose to play R (rock), P (paper), or S (scissors).
 
-The rules are as follows:
-o Paper beats rock
-o Rock beats scissors
-o Scissors beats paper
+    The rules are as follows:
+    o Paper beats rock
+    o Rock beats scissors
+    o Scissors beats paper
 
-During the game, if you'd like to stop playing, enter 'xxx'.
+    During the game, if you'd like to stop playing, enter 'xxx'.
 
-Good luck!
-    """)
+    Good luck!
+        """)
 
 
 #checks for an integer of more than 0 (allows <enter>)
@@ -71,6 +73,27 @@ def int_check(question):
         except ValueError:
             print(error)
 
+
+# compares user and comp choices
+def rps_compare(user, comp):
+
+        # if the user and the computer choice is the same, it's a tie
+        if user == comp:
+            result = "tie"
+
+        # there are three ways to win
+        elif user == "paper" and comp == "rock":
+            result = "win"
+        elif user == "scissors" and comp == "paper":
+            result = "win"
+        elif user == "rock" and comp == "scissors":
+            result = "win"
+
+        # if its not a win/ tie then its a loss :/
+        else:
+            result = "lose"
+
+        return result
 
 
 # main routine starts here
@@ -113,6 +136,12 @@ while rounds_played < num_rounds:
     print(rounds_heading)
     print()
 
+
+    #get computer choice
+    comp_choice = random.choice(rps_list[:-1])
+    print("Computer choice", comp_choice)
+    
+
     # get user choice
     user_choice = string_checker("Choose: ", rps_list)
     print("You chose", user_choice)
@@ -120,6 +149,9 @@ while rounds_played < num_rounds:
     #check if user inputs exit code
     if user_choice == "xxx":
         break
+
+    result = rps_compare(user_choice, comp_choice)
+    print(f"{user_choice} vs {comp_choice}, {result}")
 
     rounds_played += 1
 
